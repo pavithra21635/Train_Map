@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, Marker, Popup, TileLayer, GeoJSON  } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import markerIcon from '../train/train-pin.png';
 import L from 'leaflet';
@@ -10,12 +10,12 @@ const center = [7.688843, 80.665844];
 
 const MapIndex = () => {
     const [trainData, setTrainData] = useState({});
-    const [railwayData, setRailwayData] = useState(null);
+    
   
     useEffect(() => {
       // Fetch train data from API initially
       fetchTrainData();
-      fetchRailwayData();
+     
   
       // Refresh train data every 30 seconds
       const intervalId = setInterval(fetchTrainData,  1000);
@@ -26,7 +26,8 @@ const MapIndex = () => {
     }, []);
   
     const fetchTrainData = () => {
-      fetch('http://localhost:3001/api/train-location/')
+      //fetch('http://localhost:3001/api/train-location/')
+      fetch('https://trainapi-13vx.onrender.com/api/train-location/')
         .then(response => response.json())
         .then(data => {
           // Organize data by trainId and keep only the last 5 locations for each train
@@ -36,10 +37,7 @@ const MapIndex = () => {
             }
             acc[curr.trainId].push(curr);
   
-            // Keep only the last 5 locations
-            if (acc[curr.trainId].length > 5) {
-              acc[curr.trainId].shift();
-            }
+            
             return acc;
           }, {});
   
@@ -50,16 +48,7 @@ const MapIndex = () => {
         });
     };
 
-    const fetchRailwayData = () => {
-      fetch('../train/railway-data.geojson') // Replace with your GeoJSON file path or API endpoint
-        .then(response => response.json())
-        .then(data => {
-          setRailwayData(data);
-        })
-        .catch(error => {
-          console.error('Error fetching railway data:', error);
-        });
-    };
+   
   
     const customIcon = L.icon({
       iconUrl: markerIcon,
@@ -79,15 +68,7 @@ const MapIndex = () => {
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {railwayData && (
-          <GeoJSON
-            data={railwayData}
-            style={{
-              color: 'blue',
-              weight: 2,
-            }}
-          />
-        )}
+       
         {Object.entries(trainData).map(([trainId, locations]) =>
           locations.map((location, index) => (
             <Marker
