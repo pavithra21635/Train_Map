@@ -4,7 +4,7 @@ import MapIndex from './map/train/MapIndex';
 import Login from './map/train/Login';
 
 const App = () => {
-  const isAuthenticated = !!localStorage.getItem('token'); // Check for token
+  const isAuthenticated = !!sessionStorage.getItem('token'); // Check for token
 
   return (
     <BrowserRouter>
@@ -13,7 +13,7 @@ const App = () => {
         {isAuthenticated ? (
           <Route path="/" element={<MapIndex />} />
         ) : (
-          <Route path="/login2" element={<Login />} />
+          <Route path="/" element={<Login />} />
         )}
       </Routes>
     </BrowserRouter>
