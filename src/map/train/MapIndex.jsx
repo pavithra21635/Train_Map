@@ -31,7 +31,7 @@ const MapIndex = () => {
   }, [navigate]);
 
   const fetchTrainData = () => {
-    fetch('https://trainapi-13vx.onrender.com/api/train-location/get', {
+    fetch('https://trainapi-13vx.onrender.com/api/train-location/', {
    // fetch('https://trainapi-13vx.onrender.com/api/train-location/', {
     method: 'GET',
     headers: {
