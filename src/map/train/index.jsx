@@ -70,7 +70,7 @@ const MapIndex = () => {
       <MapContainer
         center={center}
         zoom={8}
-                minZoom={7.5}
+                minZoom={6}
                 maxZoom={8}
                 style={{ width: "100vw", height: "calc(100vh - 20px)" }}  // Adjust height for the header
                 maxBounds={[[5.5, 79], [10, 82]]}  // Bounds for Sri Lanka
