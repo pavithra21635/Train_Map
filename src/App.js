@@ -13,7 +13,7 @@ const App = () => {
         {isAuthenticated ? (
           <Route path="/" element={<MapIndex />} />
         ) : (
-          <Route path="/login2" element={<Login />} />
+          <Route path="/" element={<Login />} />
         )}
       </Routes>
     </BrowserRouter>
