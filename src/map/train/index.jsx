@@ -20,7 +20,7 @@ const MapIndex = () => {
      
   
       // Refresh train data every 30 seconds
-      const intervalId = setInterval(fetchTrainData,  1000);
+      const intervalId = setInterval(fetchTrainData,  60000);
   
       return () => {
         clearInterval(intervalId); // Clean up interval on unmount
@@ -32,7 +32,7 @@ const MapIndex = () => {
       fetch('https://trainapi-13vx.onrender.com/api/train-location/')
         .then(response => response.json())
         .then(data => {
-          // Organize data by trainId and keep only the last 5 locations for each train
+          
           const organizedData = data.reduce((acc, curr) => {
             if (!acc[curr.trainId]) {
               acc[curr.trainId] = [];
@@ -69,7 +69,7 @@ const MapIndex = () => {
             </div>
       <MapContainer
         center={center}
-        zoom={5}
+        zoom={8}
                 minZoom={7.5}
                 maxZoom={8}
                 style={{ width: "100vw", height: "calc(100vh - 10px)" }}  // Adjust height for the header
