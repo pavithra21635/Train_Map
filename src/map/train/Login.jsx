@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css'; 
 
-const Login = () => {
+const Login = ({ setIsAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -22,21 +22,14 @@ const Login = () => {
       });
 
       if (response.ok) {
-        console.log('waiting');
         const data = await response.json();
-        console.log('API response:', data);
-
-        // Ensure the token key matches the server response
-      if (data.accessToken) {
-        sessionStorage.setItem('token', data.accessToken);
-        console.log('Token saved, attempting to navigate...');
-        navigate('/');
-      } else {
-        console.error('Token not received in response');
-        setError('Login failed');
-      }
-        
-        
+        if (data.accessToken) {
+          sessionStorage.setItem('token', data.accessToken);
+          setIsAuthenticated(true); // Update authentication status
+          navigate('/');
+        } else {
+          setError('Login failed');
+        }
       } else {
         const errorData = await response.json();
         setError(errorData.message || 'Login failed');
